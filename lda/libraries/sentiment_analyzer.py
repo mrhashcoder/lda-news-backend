@@ -1,9 +1,3 @@
-"""
-sentiment_analyzer
-
-This module has 1 function:
-    get_sentiment (see more details below)
-"""
 from nltk import tokenize
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 

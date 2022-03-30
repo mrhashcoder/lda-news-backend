@@ -75,12 +75,6 @@ class Handler():
         """
         Processes query article for recommender system to get
         top query topics.
-
-        Args:
-            query_article = string, article or words being queried
-        Returns:
-            query_topics = list, top guided and all unguided topics
-                            distribution
         """
         num_topics = 5
         # convert query article to doc-term-matrix

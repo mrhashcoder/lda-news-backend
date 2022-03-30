@@ -45,9 +45,3 @@ def fetch_global_news():
         return data_json['results']
     else:
         return []
-
-pprint.pprint(fetch_india_news()[0] , indent = 3)
-
-news_one = fetch_india_news()[0]
-
-save_one_news(news_one)

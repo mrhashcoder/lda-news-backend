@@ -1,7 +1,5 @@
 """ Module for reading in, saving and analyzing NYTimes article data.
 
-This module keeps temporary data in the data folder including the most recent
-aggregated seed words and daily NYTimes data.
 """
 
 # System dependencies

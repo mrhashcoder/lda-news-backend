@@ -1,11 +1,36 @@
 from lda.libraries import handler
-
-news_handler = handler.Handler()
-
-news_str = "Prime Minister Datuk Seri Ismail Sabri Yaakob said the High Level Task Force on the Asean Community Post-2025 Vision is to prepare Asean to be more agile in dealing with challenges and adapting to changes. ― Bernama pic Follow us on Instagram and subscribe to our Telegram channel for the latest updates. KUALA LUMPUR, Oct 26 — Malaysia fully supports the decision made by the Asean Chair, Brunei, on the issue of representation from Myanmar at the 38th and 39th Asean Summit and Related Summits, said Prime Minister Datuk Seri Ismail Sabri Yaakob.He said this in his Twitter posting regarding Malaysia’s statement at the three-day summits beginning Tuesday under the chairmanship of Brunei via virtual conference.During the Asean foreign ministers’ online meeting on Oct 15, the regional bloc took a bold step to exclude Myanmar’s junta from the summits and also shot down the request by Myanmar’s shadow government, the National Unity Government (NUJ), to join the summits.The grouping instead decided to invite a non-political representative to represent the country.Since the elected government of Aung San Suu Kyi was overthrown by the junta on Feb 1, there has been internal unrest in Myanmar with nearly 1,000 civilians killed by security forces.During the 38th Asean Summit, Ismail Sabri also touched on the Covid-19 pandemic, urging Asean to enhance cooperation with like-minded countries and relevant international organisations towards ensuring that vaccines were affordable, accessible and equitably shared for all as well as prioritising engagement in health diplomacy through greater collaboration.Meanwhile, he said the High Level Task Force (HLTF) on the Asean Community Post-2025 Vision is to prepare Asean to be more agile in dealing with challenges and adapting to changes.He pointed out that the regional grouping should identify measures to make way for Asean to work more efficiently and effectively with optimum utilisation of resources.“Include opportunities derived from the experience and lessons from the pandemic,” he said.Meanwhile, on the 39th Asean Summit, he said Malaysia urged Myanmar to continue with efforts in delivering its commitment to begin and ensure effective repatriation of the refugees and protect the human rights of the returnees.He stated that Malaysia also firmly holds that matters relating to the South China Sea must be resolved peacefully and constructively, in accordance with universally recognised principles of international law, including the United Nations Convention on The Law of The Sea (UNCLOS).Malaysia also remains strongly committed to ratifying the Regional Comprehensive Economic Partnership (RCEP) by the end of this year as it will help expedite regional recovery as well as resilience. — Bernama"
-
-topics = news_handler.get_topics(news_str)
+from news_fetcher import fetch_india_news
+from database_saver import save_one_news, insert_tags
 
 
+def handle_one_article(news_article):
+    # save one news
+    news_id = save_one_news(news_article)
 
-print(topics[0])
+    news_str = news_article['description']
+    if news_article['content'] != 'null' or news_article['content'] != None:
+        news_str += " " + str(news_article['content'])
+    
+    # topic Generation
+    news_topic_handler = handler.Handler()
+    topic_list = news_topic_handler.get_topics(news_str)[0]
+    topics = []
+    for topic in topic_list:
+        topics.append(topic[0])
+    
+    if articles['category'] != null or articles['category'] != None:
+        for topic in articles['category']:
+            topics.append(topic)
+        
+    insert_tags(news_id , topics)
+    
+    
+
+def handle_cycle():
+    # news fetching
+    news_list = fetch_india_news()
+    for news_article in news_list:
+        handle_one_article(news_article)
+
+
+handle_cycle()
